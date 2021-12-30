@@ -1,17 +1,20 @@
 import { EuiForm,EuiFormRow, EuiButton } from '@elastic/eui'
-import React, {  useEffect, useState } from 'react'
+import React, {  SetStateAction, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import { EmailRegExp } from '../../constants/RegExp'
 import { useData } from '../../context/Context'
 import { useStateMachine } from '../../storage/littleStateMachine'
-import { IInitialStateForm, NameOfValues } from '../../types/initialStateForm'
+import { IInitialStateForm, initialStateForm, NameOfValues } from '../../types/initialStateForm'
 import { ControlEmail } from '../common/ControlEmail/ControlEmail'
 import { ControlInput } from '../common/ControlInput/ControlInput'
 import { ControlNumberField } from '../common/ControlNumberField/NumberField'
 
 
-export const Step1: React.FC = () => {
+
+
+
+export const Step1: React.FC<{setStep: (number: number) => void}> = ({setStep}) => {
   const {data, changeData} = useData()
   const {store, action, clear } = useStateMachine<IInitialStateForm>(data,{})
   const [formData, setFormData] = useState(store)
@@ -19,6 +22,8 @@ export const Step1: React.FC = () => {
 
    const form = useForm<IInitialStateForm>({
       defaultValues: formData,
+
+      
    })
 
    const {watch, getValues, handleSubmit, formState: {errors}, reset} = form
@@ -27,6 +32,7 @@ export const Step1: React.FC = () => {
       changeData(dataForm)
       action(dataForm)
       router(`/step2`)
+      setStep(2)
    }
    const errorEmail = errors.step1?.[`${NameOfValues.EMAIL}`]?.type === 'required'
     ? 'This field is required'

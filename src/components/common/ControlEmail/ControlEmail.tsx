@@ -1,8 +1,6 @@
-import { EuiFieldNumber, EuiFieldText, EuiFormRow } from '@elastic/eui';
-import React, { ChangeEventHandler, InputHTMLAttributes } from 'react';
-import { Controller, Path, PathValue, UnpackNestedValue, UseControllerProps, UseFormReturn } from 'react-hook-form';
-import { EmailRegExp } from '../../../constants/RegExp';
-import { IInitialStateForm } from '../../../types/initialStateForm';
+import {  EuiFieldText, EuiFormRow } from '@elastic/eui';
+import React, { ChangeEventHandler } from 'react';
+import { Controller, UseControllerProps, UseFormReturn } from 'react-hook-form';
 
 export interface IControlEmail {
    name: string

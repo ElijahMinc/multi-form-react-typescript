@@ -23,12 +23,17 @@ export class LittleStateMachine {
 
 
 export const useStateMachine = <T extends object>(state: T, payload: any) => {
-   const initStore: T = {...state, ...payload}
-   LittleStateMachine.setEssence(__LITTLE_STATE_MACHINE, initStore)
    const store = LittleStateMachine.getStore(__LITTLE_STATE_MACHINE)
+   const isNotEmptyStore = !!Object.keys(store).length
+   if(isNotEmptyStore){
+      LittleStateMachine.setEssence(__LITTLE_STATE_MACHINE, store)
+   }else{
+      const initStore: T = {...state, ...payload}
+      LittleStateMachine.setEssence(__LITTLE_STATE_MACHINE, initStore)
+   }
    return {
-      action: (payload: any)=>{
-       LittleStateMachine.setEssence(__LITTLE_STATE_MACHINE, {...initStore, ...payload})
+      action: (payload: object)=>{
+         LittleStateMachine.setEssence(__LITTLE_STATE_MACHINE, payload )
       },
       store,
       clear: () => LittleStateMachine.clearEssences(__LITTLE_STATE_MACHINE)
