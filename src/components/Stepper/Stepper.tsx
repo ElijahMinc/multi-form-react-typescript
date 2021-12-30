@@ -2,7 +2,7 @@ import { EuiStepsHorizontal } from '@elastic/eui';
 import { EuiStepHorizontalProps } from '@elastic/eui/src/components/steps/step_horizontal';
 import React from 'react';
 
-interface ISteps {
+export interface ISteps {
    steps: EuiStepHorizontalProps[]
 }
 
