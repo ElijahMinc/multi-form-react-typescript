@@ -1,0 +1,26 @@
+
+@use 'sass:list';
+
+$flexDirection: ('row' 'column');
+
+@flexStatusClasses: ('');
+
+@mixin flexPosition ($direction, $centerAlign: false, $centerJustify: false) {
+   display: flex;
+
+   $row: nth($flexDirection, 1);
+   $column: nth($flexDirection, 2);
+
+   @if $direction == $row {
+      flex-direction: row;
+   }
+   @if $direction == $column{
+      flex-direction: column;
+   }
+   @if $centerJustify == true{
+      justify-content: center;
+   }
+   @if $centerAlign == true{
+      align-items: center;
+   }
+}

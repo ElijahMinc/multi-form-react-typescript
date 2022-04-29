@@ -1,56 +1,49 @@
-import { EuiStepHorizontalProps } from "@elastic/eui/src/components/steps/step_horizontal"
-import { useState } from "react"
-import { useNavigate } from "react-router-dom"
-import { ISteps } from "../components/Stepper/Stepper"
+import { EuiStepHorizontalProps } from '@elastic/eui/src/components/steps/step_horizontal'
+import { useState } from 'react'
+import { ISteps } from '../components/Stepper/Stepper'
 
-export interface HOCprops extends ISteps{
-   setStep: () => void
- }
- 
+export interface HOCWithStepsProps extends ISteps {
+  setStep: () => void
+  currentSteps: number
+  userData: {
+    isNewUser: boolean
+    userId: number
+  }
+}
 
-export const withSteps = <P extends HOCprops>(Component: React.ComponentType<P>) => {
+export const withSteps = <P extends HOCWithStepsProps>(Component: React.FC<P>) => {
+  enum Steps {
+    FIRST_STEP = 1,
+    SECOND_STEP = 2,
+    THIRD_STEP = 3,
+  }
 
-   return (props: any) => {
-     const [ step, setStep ] = useState(1)
-     
-       const navigate = useNavigate()
- 
-     const handleChangeStep = (stepNumber: number) => setStep(stepNumber)
- 
-     const steps: EuiStepHorizontalProps[] = [
-       {
-       title: 'Step 1',
-       isComplete: step >= 2,
-       status: step === 1 ? 'current' : 'disabled',
-       onClick: () => 
-           {
-             navigate('/')
-             setStep(1)
-           }
-       }, 
-       {
-         title: 'Step 2',
-         isComplete:  step >= 3,
-         status: step === 2 ? 'current' : 'disabled',
-         onClick: () => {
-           navigate('/step2')
-           setStep(2)
-         }
-       },
-       {
-         title: 'Step 3',
-         isComplete:  step >= 4,
-         status: step === 3 ? 'current' : 'disabled',
-         onClick: () => setStep(3)
- 
-       },
-       ]
- 
-    return (
-      <>
-        <Component {...props} steps={steps} setStep={handleChangeStep} />
-      </>
-     
-    )
-   }
- }
+  return (props: any) => {
+    const [step, setStep] = useState(Steps.FIRST_STEP)
+
+    const handleChangeStep = (stepNumber: number) => setStep(stepNumber)
+
+    const steps: EuiStepHorizontalProps[] = [
+      {
+        title: 'Step 1',
+        isComplete: step > Steps.FIRST_STEP,
+        status: step === Steps.FIRST_STEP ? 'current' : 'disabled',
+        onClick: () => step > Steps.FIRST_STEP && setStep(Steps.FIRST_STEP),
+      },
+      {
+        title: 'Step 2',
+        isComplete: step > Steps.SECOND_STEP,
+        status: step === Steps.SECOND_STEP ? 'current' : 'disabled',
+        onClick: () => step > Steps.SECOND_STEP && setStep(Steps.SECOND_STEP),
+      },
+      {
+        title: 'Step 3',
+        isComplete: step > Steps.THIRD_STEP,
+        status: step === Steps.THIRD_STEP ? 'current' : 'disabled',
+        onClick: () => step > Steps.THIRD_STEP && setStep(Steps.THIRD_STEP),
+      },
+    ]
+
+    return <Component currentStep={step} steps={steps} setStep={handleChangeStep} {...props} />
+  }
+}

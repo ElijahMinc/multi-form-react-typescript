@@ -4,6 +4,7 @@ import React from 'react';
 
 export interface ISteps {
    steps: EuiStepHorizontalProps[]
+   currentStep: number
 }
 
 const Steps: React.FC<ISteps> =  ({steps}) => <EuiStepsHorizontal steps={steps}/>

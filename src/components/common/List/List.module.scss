@@ -1,0 +1,39 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  gap: 50px;
+  .item {
+    background-color: azure;
+    border-radius: 10px;
+    overflow: hidden;
+    width: 16rem;
+    height: 16rem;
+    border-radius: 42% 56% 72% 28% / 42% 42% 56% 48%;
+    background-color: rgb(42, 170, 174);
+    background-size: cover;
+    background-position: center;
+    animation: morfh 3.75s linear infinite;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    span {
+      font-weight: bolder;
+    }
+  }
+}
+
+@keyframes morfh {
+  0%,
+  100% {
+    border-radius: 42% 56% 72% 28% / 42% 42% 56% 48%;
+  }
+  33% {
+    border-radius: 72% 28% 48% 48% / 28% 28% 72% 72%;
+  }
+  66% {
+    border-radius: 100% 56% 56% 100% / 100% 100% 56% 56%;
+  }
+}

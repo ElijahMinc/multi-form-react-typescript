@@ -21,42 +21,48 @@ export interface IControlEmail {
 }
 
 export const ControlEmail:React.FC<IControlEmail> = ({
-   name,
-   form,
-   defaultValue,
-   error,
-   rules,
-   placeholder,
-   required,
-   className,
-   ariaLabel,
-   isLoading,
-   label,
-   helperText,
-   isDisabled,
+  name,
+  form,
+  defaultValue,
+  error,
+  rules,
+  placeholder,
+  required,
+  className,
+  ariaLabel,
+  isLoading,
+  label,
+  helperText,
+  isDisabled,
 }) => {
-   const {control } = form
-   return (
-      <EuiFormRow label={label} helpText={helperText} error={error}>
-         <Controller
+  const {control } = form
+  return (
+    <EuiFormRow label={label} helpText={helperText} error={error}>
+      <Controller
+        name={name}
+        control={control}
+        rules={rules}
+        defaultValue={defaultValue ?? ''}
+        render={({field}) => {
+          const {onChange, onBlur, name, ref, value} = field
+          return (<EuiFieldText
+            inputRef={ref}
+            onChange={onChange}
+            onBlur={onBlur}
             name={name}
-            control={control}
-            rules={rules}
-            defaultValue={defaultValue ?? ''}
-            render={({field}) => 
-            <EuiFieldText
-               isInvalid={!!error}
-               className={className}
-               disabled={isDisabled}
-               isLoading={isLoading}
-               placeholder={placeholder}
-               required={required}
-               aria-label={ariaLabel}
-               {...field}
-               />
-            }
-            />
-      </EuiFormRow>
+            value={value}
+            isInvalid={!!error}
+            className={className}
+            disabled={isDisabled}
+            isLoading={isLoading}
+            placeholder={placeholder}
+            required={required}
+            aria-label={ariaLabel}
+            // {...field}
+          />)
+        }}
+      />
+    </EuiFormRow>
     
-   )
+  )
 }

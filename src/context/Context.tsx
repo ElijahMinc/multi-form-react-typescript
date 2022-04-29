@@ -10,17 +10,16 @@ const InitContext = createContext<any>(null)
 
 export const ConfigureContext: React.FC<IProp> = ({children}) => {
 
-   const [data, setData] = useState<IInitialStateForm>(initialStateForm) 
+  const [data, setData] = useState<IInitialStateForm>(initialStateForm) 
 
-   const changeData = (newData: any) => {
-      setData( prev => ({...prev, ...newData}))
-   }
-   console.log(data)
-   return (
-      <InitContext.Provider value={{data, changeData}}>
-            {children}
-      </InitContext.Provider>
-   )
+  const changeData = (newData: any) => {
+    setData( prev => ({...prev, ...newData}))
+  }
+  return (
+    <InitContext.Provider value={{data, changeData}}>
+      {children}
+    </InitContext.Provider>
+  )
 }
 
 export const useData = () => useContext(InitContext)

@@ -1,0 +1,8 @@
+.euiGlobalToastList{
+   &--right:not(:empty) {
+      top: 0 !important;
+   }
+   .euiGlobalToastListItem{
+      margin-top: 0 !important;
+   }
+}
